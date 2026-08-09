@@ -87,23 +87,12 @@ Every release ships `checksums.txt`:
 sha256sum -c checksums.txt --ignore-missing
 ```
 
-Releases built by CI also carry a [build attestation](https://docs.github.com/actions/security-guides/using-artifact-attestations),
-which proves the archive was produced by our release workflow and not
-substituted afterwards:
+Releases built by CI also carry a [build attestation](https://docs.github.com/actions/security-guides/using-artifact-attestations)
+recording which workflow run produced them. The release workflow lives in the
+private source repository, so verifying an attestation needs access to it:
 
 ```sh
-gh attestation verify infra_0.1.0_linux_amd64.tar.gz --repo infrasutra/infra-cli
+gh attestation verify infra_0.1.0_linux_amd64.tar.gz --repo infrasutra/infrasutra-backend
 ```
 
-The install scripts check `checksums.txt` for you.
-
-## What's in this repo
-
-| Path | For |
-|------|-----|
-| `Formula/infra.rb` | Homebrew tap |
-| `bucket/infra.json` | Scoop bucket |
-| `packaging/aur/PKGBUILD` | Arch Linux |
-| `packaging/winget/` | winget manifests, ready to submit to `microsoft/winget-pkgs` |
-
-All of them are generated from a published release and carry its real SHA256.
+The install scripts verify `checksums.txt` for you on every install.
