@@ -136,23 +136,33 @@ of paying for platform build minutes, writing a Dockerfile when there is none,
 splitting a monorepo into an `infra.yaml`, and reading the platform's own
 explanation of a failure instead of guessing.
 
-### Claude Code
+### One command
 
 ```sh
-# for one project
-mkdir -p .claude/skills
-curl -fsSL https://github.com/infrasutra/infra-cli/archive/refs/heads/main.tar.gz |
-  tar -xz --strip-components=2 -C .claude/skills infra-cli-main/skills/infrasutra
-
-# or for every project
-mkdir -p ~/.claude/skills
-curl -fsSL https://github.com/infrasutra/infra-cli/archive/refs/heads/main.tar.gz |
-  tar -xz --strip-components=2 -C ~/.claude/skills infra-cli-main/skills/infrasutra
+infra skill install
 ```
 
-### Any agent that speaks MCP
+It detects which agents this project is set up for and writes the right thing
+for each: the skill tree for Claude Code, `AGENTS.md` for Codex and everything
+else that reads it, a rules file for Cursor, Cline or Windsurf, plus the MCP
+entry where the host uses one. Nothing configured yet? It writes `AGENTS.md`,
+which nearly every agent reads.
 
-The CLI is its own MCP server — no extra install:
+```sh
+infra skill list              # what this project uses
+infra skill install --agent claude
+infra skill install --global  # for every project on this machine
+infra skill print             # the guidance itself, to paste elsewhere
+```
+
+The guidance ships inside the binary, so it always matches the CLI you have.
+Re-running updates in place and leaves anything you wrote around it alone.
+
+### By hand
+
+The skill is plain markdown, published in this repo under
+[`skills/infrasutra/`](skills/infrasutra). For an MCP host, the server is the
+CLI itself:
 
 ```json
 {
@@ -166,19 +176,6 @@ Works in Claude Code (`.mcp.json`), Cline, Cursor, Windsurf, Continue and Codex.
 The tools are read-only (services, logs, builds, env keys) plus deployment
 guidance; anything destructive stays in the CLI, where a person reads the
 command before it runs.
-
-### Agents with a terminal and no MCP
-
-OpenCode, Aider, Grok CLI, Antigravity and anything else that can run a shell
-need no setup — they call `infra` directly. Put the short version in whatever
-rules file the tool reads:
-
-```markdown
-Deploy: `infra up --build local`. Never `docker push` by hand.
-No Dockerfile? Write a multi-stage, non-root one listening on $PORT first.
-Monorepo? One infra.yaml, one Dockerfile per service, build context = repo root.
-Debug: `infra services get <name>` explains a failure in the platform's own words.
-```
 
 Full setup notes, including which hosts cannot use either surface, are in
 [`skills/infrasutra/references/agent-setup.md`](skills/infrasutra/references/agent-setup.md).
