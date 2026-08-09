@@ -43,8 +43,12 @@ scoop install infra
 
 ### Arch Linux
 
-`packaging/aur/PKGBUILD` builds from the published release — the binary is
-static, so nothing compiles:
+```sh
+yay -S infra-bin
+```
+
+Or build the published package yourself — the binary is static, so nothing
+compiles:
 
 ```sh
 curl -fsSLO https://raw.githubusercontent.com/infrasutra/infra-cli/main/packaging/aur/PKGBUILD
@@ -82,6 +86,16 @@ Every release ships `checksums.txt`:
 ```sh
 sha256sum -c checksums.txt --ignore-missing
 ```
+
+Releases built by CI also carry a [build attestation](https://docs.github.com/actions/security-guides/using-artifact-attestations),
+which proves the archive was produced by our release workflow and not
+substituted afterwards:
+
+```sh
+gh attestation verify infra_0.1.0_linux_amd64.tar.gz --repo infrasutra/infra-cli
+```
+
+The install scripts check `checksums.txt` for you.
 
 ## What's in this repo
 
