@@ -25,8 +25,14 @@ own, or `INFRA_VERSION=0.1.0` to pin a release.
 
 ```sh
 brew tap infrasutra/infra https://github.com/infrasutra/infra-cli
-brew install infra
+brew trust infrasutra/infra
+brew install infrasutra/infra/infra
 ```
+
+Both extra steps are load-bearing. Homebrew 6 refuses to load a formula from a
+third-party tap until you trust it, and the unqualified name `infra` belongs to
+an unrelated cask (the Infra Kubernetes client) — `brew install infra` would
+install that instead.
 
 ### Windows
 
