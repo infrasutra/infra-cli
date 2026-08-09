@@ -7,11 +7,6 @@ This repository publishes **releases only**. The CLI is built from the main
 Infrasutra repository; nothing here but the binaries and the package manifests
 that point at them.
 
-> Infrasutra is not publicly launched yet, so `https://infrasutra.com` is not
-> serving the install script quite yet. Until it does, install from a release
-> archive below (or from a deployment you already have access to — every
-> Infrasutra deployment serves the same script at `/public/cli/install.sh`).
-
 ## Install
 
 ### macOS · Linux
