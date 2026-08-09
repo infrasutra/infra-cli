@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "description": "Command-line client for Infrasutra",
-  "homepage": "https://deploymysite.com",
+  "homepage": "https://infrasutra.com",
   "license": "Proprietary",
   "architecture": {
     "64bit": {

@@ -1,0 +1,17 @@
+pkgbase = infra-bin
+	pkgdesc = Command-line client for Infrasutra
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://infrasutra.com
+	arch = x86_64
+	arch = aarch64
+	license = custom
+	provides = infra
+	conflicts = infra
+	options = !strip
+	source_x86_64 = infra-0.1.0-x86_64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.1.0/infra_0.1.0_linux_amd64.tar.gz
+	sha256sums_x86_64 = 8b160439aea7475dd64c0b4d0cbe51d246766fcf6461c81c2274f5d27dc61d5e
+	source_aarch64 = infra-0.1.0-aarch64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.1.0/infra_0.1.0_linux_arm64.tar.gz
+	sha256sums_aarch64 = b7b4770d9e297598168008be6477a710ec02bd51f4793c48c283ac7440139795
+
+pkgname = infra-bin
