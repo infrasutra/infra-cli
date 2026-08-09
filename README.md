@@ -29,10 +29,7 @@ brew trust infrasutra/infra
 brew install infrasutra/infra/infra
 ```
 
-Both extra steps are load-bearing. Homebrew 6 refuses to load a formula from a
-third-party tap until you trust it, and the unqualified name `infra` belongs to
-an unrelated cask (the Infra Kubernetes client) — `brew install infra` would
-install that instead.
+Both extra steps are load-bearing — see [Homebrew notes](#homebrew-notes).
 
 ### Windows
 
@@ -74,6 +71,52 @@ verify it against `checksums.txt`, unpack, and put `infra` on your `PATH`:
 ```sh
 tar -xzf infra_0.1.0_linux_amd64.tar.gz
 sudo install -m755 infra /usr/local/bin/infra
+```
+
+## Homebrew notes
+
+Two things about the Homebrew install surprise people. Neither is a bug in the
+tap; both are how Homebrew works.
+
+### The formula name must be qualified
+
+`infra` is already taken in Homebrew's core taps by an unrelated project — the
+Infra Kubernetes desktop client. An unqualified install gets that one:
+
+```
+$ brew info infra
+Warning: Treating infra as a cask. For the formula, use infrasutra/infra/infra
+==> infra (infra): 0.47.0 (auto_updates)
+Kubernetes desktop client
+https://infra.app/
+```
+
+Always install as `infrasutra/infra/infra`. The command it puts on your PATH is
+still just `infra`.
+
+### The tap has to be trusted
+
+Homebrew 6 will not load a formula from a third-party tap until you say so:
+
+```
+Error: Refusing to load formula infrasutra/infra/infra from untrusted tap infrasutra/infra.
+Run `brew trust --formula infrasutra/infra/infra` or `brew trust infrasutra/infra` to trust it.
+```
+
+`brew trust infrasutra/infra` is a one-time consent, same as tapping. Run it
+once and future upgrades work normally.
+
+### Upgrading
+
+```sh
+brew update && brew upgrade infrasutra/infra/infra
+```
+
+### Uninstalling
+
+```sh
+brew uninstall infrasutra/infra/infra
+brew untap infrasutra/infra
 ```
 
 ## First run
