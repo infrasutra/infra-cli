@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "description": "Command-line client for Infrasutra",
+  "homepage": "https://deploymysite.com",
+  "license": "Proprietary",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/infrasutra/infra-cli/releases/download/v0.1.0/infra_0.1.0_windows_amd64.zip",
+      "hash": "765b72e2d022b803361462520f9bfd638c48eee19401ba42019c17e643b6fcd8"
+    }
+  },
+  "bin": "infra.exe",
+  "checkver": {
+    "github": "https://github.com/infrasutra/infra-cli"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/infrasutra/infra-cli/releases/download/v$version/infra_$version_windows_amd64.zip"
+      }
+    },
+    "hash": {
+      "url": "https://github.com/infrasutra/infra-cli/releases/download/v$version/checksums.txt"
+    }
+  }
+}

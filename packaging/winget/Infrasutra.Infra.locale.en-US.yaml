@@ -1,0 +1,11 @@
+PackageIdentifier: Infrasutra.Infra
+PackageVersion: 0.1.0
+PackageLocale: en-US
+Publisher: Infrasutra
+PublisherUrl: https://deploymysite.com
+PackageName: infra
+PackageUrl: https://github.com/infrasutra/infra-cli
+License: Proprietary
+ShortDescription: Command-line client for Infrasutra
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0
