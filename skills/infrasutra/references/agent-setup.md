@@ -16,19 +16,65 @@ curl -fsSL https://infrasutra.com/public/cli/install.sh | sh
 infra auth login
 ```
 
-## Claude Code
+## One command, any agent
 
-Skill (preferred). Drop this directory in and it loads on demand:
-
-```
-.claude/skills/infrasutra/
-├── SKILL.md
-└── references/
+```sh
+infra skill install
 ```
 
-Or install it for every project at `~/.claude/skills/infrasutra/`.
+It looks at the project, works out which agents it is set up for, and writes
+the right thing for each — the skill tree for Claude Code, `AGENTS.md` for
+Codex and everything else that reads it, a rules file for Cursor, Cline or
+Windsurf, plus the MCP entry where the host uses one. Nothing configured yet?
+It writes `AGENTS.md`, which nearly every agent reads.
 
-MCP, if you want the typed tools as well — `.mcp.json` in the project root:
+```sh
+infra skill list              # what this project uses, and what you have installed
+infra skill install --agent claude
+infra skill install --global  # for every project on this machine
+infra skill print             # the guidance itself, to paste somewhere else
+```
+
+The guidance is embedded in the binary, so it always matches the CLI you have,
+works offline, and cannot describe a flag your version does not support.
+Re-running updates in place: the block it owns in `AGENTS.md` is delimited by
+markers, and everything you wrote around it is left alone.
+
+To pull the newest published guidance instead — accepting that it may describe
+flags a older CLI does not have:
+
+```sh
+infra skill install --refresh
+infra skill install --refresh --ref v0.2.0   # a specific published version
+```
+
+If the download fails it falls back to the embedded copy rather than leaving
+you with nothing.
+
+## What each agent gets
+
+| Agent | Written |
+|-------|---------|
+| Claude Code | `.claude/skills/infrasutra/` + `.mcp.json` |
+| Codex | `AGENTS.md` + `[mcp_servers.infrasutra]` in `.codex/config.toml` |
+| Cursor | `.cursor/rules/infrasutra.mdc` (alwaysApply) |
+| Cline | `.clinerules` — file or directory, whichever you have |
+| Windsurf | `.windsurf/rules/infrasutra.md` |
+| Anything else | `AGENTS.md` |
+
+`AGENTS.md` is an open specification stewarded by the Linux Foundation and read
+by Claude Code, Codex, Cursor, Aider, Copilot, Gemini CLI, Continue, Windsurf,
+Zed, Amp and others — which is why it is the fallback.
+
+## Doing it by hand
+
+The skill is a directory of markdown; copy it wherever your tool expects one:
+
+```sh
+infra skill print --full > wherever-your-agent-reads.md
+```
+
+For an MCP host, the server is the CLI itself:
 
 ```json
 {
@@ -38,9 +84,7 @@ MCP, if you want the typed tools as well — `.mcp.json` in the project root:
 }
 ```
 
-## Codex
-
-Add the same server to your Codex MCP config:
+Codex uses TOML for the same thing:
 
 ```toml
 [mcp_servers.infrasutra]
@@ -48,44 +92,11 @@ command = "infra"
 args = ["mcp"]
 ```
 
-Codex reads `AGENTS.md`, so the fastest way to give it the opinions in this
-skill is to reference them there:
+## Agents with a terminal and no MCP
 
-```markdown
-## Deploying
-Deploy with `infra up --build local` (builds here, pushes, platform deploys the
-image — no build minutes, warm cache). Check for a Dockerfile first; see
-.claude/skills/infrasutra/SKILL.md.
-```
-
-## Cline · Cursor · Windsurf · Continue
-
-All take the same MCP server entry:
-
-```json
-{
-  "mcpServers": {
-    "infrasutra": { "command": "infra", "args": ["mcp"] }
-  }
-}
-```
-
-They can also run shell commands, so the CLI works without any configuration —
-put the deploy rules in the project's rules file (`.clinerules`,
-`.cursor/rules/`) and point them at the CLI.
-
-## OpenCode · Aider · Grok CLI · Antigravity · anything with a terminal
-
-No configuration. The agent runs `infra` directly. Give it the rules in
-whatever the tool's convention is (`AGENTS.md`, `CONVENTIONS.md`, a rules file)
-and keep them short:
-
-```markdown
-Deploy: `infra up --build local`. Never `docker push` by hand.
-No Dockerfile? Write a multi-stage, non-root one listening on $PORT first.
-Monorepo? One infra.yaml, one Dockerfile per service, build context = repo root.
-Debug: `infra services get <name>` explains a failure in the platform's own words.
-```
+OpenCode, Aider, Grok CLI, Antigravity and anything else that can run a shell
+need no MCP at all — they call `infra` directly. `infra skill install` still
+helps: it writes `AGENTS.md`, which those tools read.
 
 ## ChatGPT connectors and claude.ai
 
