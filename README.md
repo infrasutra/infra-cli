@@ -128,6 +128,61 @@ infra ssh            # pick a service and get a shell in it
 infra logs --service web --follow
 ```
 
+## Use it with an AI coding agent
+
+This repo ships a **skill** — the deployment rules an agent should follow, in the
+form Claude Code and friends read directly. It covers building locally instead
+of paying for platform build minutes, writing a Dockerfile when there is none,
+splitting a monorepo into an `infra.yaml`, and reading the platform's own
+explanation of a failure instead of guessing.
+
+### Claude Code
+
+```sh
+# for one project
+mkdir -p .claude/skills
+curl -fsSL https://github.com/infrasutra/infra-cli/archive/refs/heads/main.tar.gz |
+  tar -xz --strip-components=2 -C .claude/skills infra-cli-main/skills/infrasutra
+
+# or for every project
+mkdir -p ~/.claude/skills
+curl -fsSL https://github.com/infrasutra/infra-cli/archive/refs/heads/main.tar.gz |
+  tar -xz --strip-components=2 -C ~/.claude/skills infra-cli-main/skills/infrasutra
+```
+
+### Any agent that speaks MCP
+
+The CLI is its own MCP server — no extra install:
+
+```json
+{
+  "mcpServers": {
+    "infrasutra": { "command": "infra", "args": ["mcp"] }
+  }
+}
+```
+
+Works in Claude Code (`.mcp.json`), Cline, Cursor, Windsurf, Continue and Codex.
+The tools are read-only (services, logs, builds, env keys) plus deployment
+guidance; anything destructive stays in the CLI, where a person reads the
+command before it runs.
+
+### Agents with a terminal and no MCP
+
+OpenCode, Aider, Grok CLI, Antigravity and anything else that can run a shell
+need no setup — they call `infra` directly. Put the short version in whatever
+rules file the tool reads:
+
+```markdown
+Deploy: `infra up --build local`. Never `docker push` by hand.
+No Dockerfile? Write a multi-stage, non-root one listening on $PORT first.
+Monorepo? One infra.yaml, one Dockerfile per service, build context = repo root.
+Debug: `infra services get <name>` explains a failure in the platform's own words.
+```
+
+Full setup notes, including which hosts cannot use either surface, are in
+[`skills/infrasutra/references/agent-setup.md`](skills/infrasutra/references/agent-setup.md).
+
 ## Verifying a download
 
 Every release ships `checksums.txt`:
