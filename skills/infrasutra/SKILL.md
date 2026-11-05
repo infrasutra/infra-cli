@@ -13,6 +13,41 @@ curl -fsSL https://infrasutra.com/public/cli/install.sh | sh
 infra auth login
 ```
 
+## More than one account
+
+One machine can hold several sign-ins. Each context is one account on one
+Infrasutra deployment, with its own login and its own default org, project and
+stage. **Before anything that changes a service, run `infra whoami`.** If the
+account or org isn't the one the user meant, stop and ask.
+
+```sh
+infra whoami                        # the context, email and org this folder uses
+infra ctx list                      # every context, and who it is signed in as
+infra up --context work             # use a context for one command
+INFRA_CONTEXT=work infra up         # the same, for a whole shell or script
+infra orgs list                     # the orgs this login can work in
+infra orgs switch acme              # change org; it stays changed for this context
+```
+
+Which context a command uses: `--context`, then `INFRA_CONTEXT`, then a folder pin,
+then the default. A name that doesn't exist is an error, so a typo can't deploy
+somewhere else. If `--org` or `INFRA_ORG` names an org other than the active one,
+the command stops and says to run `infra orgs switch`.
+
+For the user to run, because they change what later commands do:
+
+```sh
+infra auth login --context work     # add an account; prints a code to approve in a browser
+infra auth login --context work --org acme
+infra ctx use work                  # change the default
+infra ctx pin work                  # always use it in this folder and those inside it
+```
+
+Prefer `--context` on the command over changing the default: another terminal or
+agent may be relying on it. Sign-in is the user's: give them the command and the
+code, and never paste a token. `INFRA_TOKEN` overrides every saved login and its
+saved org.
+
 ## The rule that matters most: build locally, deploy the image
 
 **Default to `infra up --build local`.** It builds the image on this machine,
