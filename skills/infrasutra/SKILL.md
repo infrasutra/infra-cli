@@ -112,6 +112,10 @@ infra up                                    # uses infra.yaml when present
 infra up --dry-run                          # validate the spec, deploy nothing
 ```
 
+With no `infra.yaml`, `infra up` names the service after the directory and makes
+it a public web service on the Dockerfile's `EXPOSE` port. For a background
+worker, or any other name or port, write an `infra.yaml`.
+
 `infra up` streams the deploy. When it returns, confirm the service is actually
 serving — a green deploy is not a working app.
 
