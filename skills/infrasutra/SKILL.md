@@ -173,6 +173,36 @@ pull the image.
 - Do not put secrets in `infra.yaml` — it is committed.
 - Do not delete and recreate a service to "reset" it. That drops its volumes.
 
+## Never delete anything yourself
+
+You do not run destructive commands, even if the user asks you to and even if you
+are sure. That covers:
+
+- `infra services delete`
+- `infra projects delete`
+- `infra stages delete`
+- `infra templates delete`
+- `infra clusters remove`
+- `infra env unset`
+- any direct API call that deletes or overwrites data
+
+They ask a person to type the resource's name in a real terminal, and you must not
+work around that: no `--yes`, no fake terminal, no piped answers, and no calling the
+API instead.
+
+When a delete is what's needed, give the user a guide and stop:
+
+1. Say exactly what will be destroyed, and what stops working because of it.
+2. Check for a less destructive option first. `infra down` stops a service and keeps
+   its configuration and data.
+3. Give them the exact command to run in their own terminal, for example:
+
+   ```sh
+   infra services delete my-service --project my-project
+   ```
+
+4. Tell them they'll be asked to type the name, and to come back when it's done.
+
 ## Reference files
 
 - `references/dockerfiles.md` — per-stack templates, and the four rules every
@@ -181,4 +211,4 @@ pull the image.
   build-context trap
 - `references/github-actions.md` — the OIDC deploy workflow, no repo secrets
 - `references/debugging.md` — failure signatures and what causes them
-- `references/agent-setup.md` — wiring other agents (MCP, rules files)
+- `references/agent-setup.md` — wiring other agents, and what each one gets
