@@ -84,7 +84,18 @@ The skill is a directory of markdown; copy it wherever your tool expects one:
 infra skill print --full > wherever-your-agent-reads.md
 ```
 
-For an MCP host, the server is the CLI itself:
+For an MCP host that can send a header, use the hosted server. It needs nothing
+running locally and takes a read-only key you can revoke:
+
+```bash
+infra mcp setup
+```
+
+It prints the key and the config for Claude Code, Cursor and VS Code. It needs an
+API release that includes `POST /api/v1/mcp`; `infra doctor` reports the API this
+CLI talks to.
+
+For a host that can only launch a command, the server is the CLI itself:
 
 ```json
 {
@@ -110,8 +121,9 @@ helps: it writes `AGENTS.md`, which those tools read.
 
 ## ChatGPT connectors and claude.ai
 
-These have no local machine, so `infra mcp` over stdio does not apply — they
-need a hosted MCP endpoint with OAuth. Not available yet.
+These have no local machine, so `infra mcp` over stdio does not apply. Connector
+UIs that expect OAuth can't use the hosted server yet, because it takes access
+keys only. A host that lets you set an Authorization header can use it today.
 
 ## Checking the wiring
 

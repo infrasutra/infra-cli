@@ -1,5 +1,5 @@
 PackageIdentifier: Infrasutra.Infra
-PackageVersion: 0.2.0
+PackageVersion: 0.3.0
 InstallerType: zip
 NestedInstallerType: portable
 NestedInstallerFiles:
@@ -7,7 +7,7 @@ NestedInstallerFiles:
     PortableCommandAlias: infra
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/infrasutra/infra-cli/releases/download/v0.2.0/infra_0.2.0_windows_amd64.zip
-    InstallerSha256: 7E63859F10631F587CC9F40E9BC43AD8C89ECBF332676C9686BB6ACCFB8DAEDB
+    InstallerUrl: https://github.com/infrasutra/infra-cli/releases/download/v0.3.0/infra_0.3.0_windows_amd64.zip
+    InstallerSha256: 77B886A09144D9C92F0098242111611132A437DE7D87A42704130AA50137FC33
 ManifestType: installer
 ManifestVersion: 1.6.0

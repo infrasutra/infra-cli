@@ -114,21 +114,33 @@ infra up --dry-run                          # validate the spec, deploy nothing
 
 With no `infra.yaml`, `infra up` names the service after the directory and makes
 it a public web service on the Dockerfile's `EXPOSE` port. For a background
-worker, or any other name or port, write an `infra.yaml`.
+worker, or any other name or port, write an `infra.yaml`. Write one too when the
+Dockerfile has several targets: without it, the last stage is what gets deployed.
+
+Services with a `build:` block in `infra.yaml` are built here and pushed, using
+its `target`, `context`, `dockerfile` and `args`.
+
+Running `infra up` again updates an existing service in place. It gets the new
+version and keeps its ports, env, resources and domains, so change those with
+`infra env set` or in the dashboard, not by editing `infra.yaml`.
 
 `infra up` streams the deploy. When it returns, confirm the service is actually
 serving — a green deploy is not a working app.
 
 ## Debugging a failing service
 
+Start with `infra status`: it lists every service with the reason behind anything
+failing. If a deploy can't start at all, `infra doctor` checks the API, the
+sign-in and Docker, and prints the fix for each problem.
+
 Work in this order; stop as soon as the cause is clear.
 
 ```sh
 infra services list -o json      # what exists, and its status
 infra services get <name>        # status_reason/title/message explain a failure
-infra logs --service <name> --follow
+infra logs <name> --follow
 infra ssh <name>                 # a shell in the running container
-infra builds list --service <name>   # build history, if the build failed
+infra builds list <name>             # build history, if the build failed
 ```
 
 `infra` with no arguments opens a dashboard over everything, with `l` logs,
@@ -143,7 +155,7 @@ humans.
 ## Environment variables
 
 ```sh
-infra env list --service <name>
+infra env list <name>
 infra env set --service <name> KEY=value
 ```
 

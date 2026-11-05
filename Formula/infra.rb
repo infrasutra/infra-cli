@@ -2,28 +2,28 @@
 class Infra < Formula
   desc "Command-line client for Infrasutra"
   homepage "https://infrasutra.com"
-  version "0.2.0"
+  version "0.3.0"
   license :cannot_represent
 
   on_macos do
     on_arm do
-      url "https://github.com/infrasutra/infra-cli/releases/download/v0.2.0/infra_0.2.0_darwin_arm64.tar.gz"
-      sha256 "408bd9dc8c7332b3e4dced45b5975f81535cd044fe7068073d45afc128629d34"
+      url "https://github.com/infrasutra/infra-cli/releases/download/v0.3.0/infra_0.3.0_darwin_arm64.tar.gz"
+      sha256 "4947d78bddb62bdc5bddce8272d45469daa15e963d8726a86108464973262305"
     end
     on_intel do
-      url "https://github.com/infrasutra/infra-cli/releases/download/v0.2.0/infra_0.2.0_darwin_amd64.tar.gz"
-      sha256 "e32bca30f88b1218f039c2f210ea3c06d4f61b6ab642040bd339941963750ca3"
+      url "https://github.com/infrasutra/infra-cli/releases/download/v0.3.0/infra_0.3.0_darwin_amd64.tar.gz"
+      sha256 "262de96aeda819736bf9a16c0c5d0c782433405f248f6ef9288d1d0ad9d01670"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/infrasutra/infra-cli/releases/download/v0.2.0/infra_0.2.0_linux_arm64.tar.gz"
-      sha256 "8fc56ad552b2446f85c6a620a06db7ec99f6a3cb4a3350475cb94874a60e19bb"
+      url "https://github.com/infrasutra/infra-cli/releases/download/v0.3.0/infra_0.3.0_linux_arm64.tar.gz"
+      sha256 "2a6cd1dcbbee9dc8ead584a30c55857ef442f9f28888846570cdc04062be4cae"
     end
     on_intel do
-      url "https://github.com/infrasutra/infra-cli/releases/download/v0.2.0/infra_0.2.0_linux_amd64.tar.gz"
-      sha256 "8cfbd1bc0cba36260dd490f05507e742f86036989a7de91a113b48e4d2b51f26"
+      url "https://github.com/infrasutra/infra-cli/releases/download/v0.3.0/infra_0.3.0_linux_amd64.tar.gz"
+      sha256 "df7cafcb99daadbb3025dfbc0f0da25dd6ab55be247e12c36f7ef2aa255e539d"
     end
   end
 
