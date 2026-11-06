@@ -98,8 +98,8 @@ steps for each app and the address to use; `infra connect claude` opens Claude's
 connector page with the address filled in. Connect once on the web and the mobile
 app has it too.
 
-Signing in shows which organization the app will work in, and whether it may
-deploy. It can read services and logs, create projects, deploy an image or a Git
+Signing in shows which organization the app will work in. Deploying stays off
+unless you tick "Also let it deploy" on that page. With it on, the app can read services and logs, create projects, deploy an image or a Git
 repository, redeploy and roll back. It can't delete anything, and it can't switch a
 running service to a different image: a person does that, because that image would
 get the service's secrets. What it deploys does run with your project's environment
