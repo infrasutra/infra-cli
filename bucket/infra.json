@@ -1,12 +1,12 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Command-line client for Infrasutra",
   "homepage": "https://infrasutra.com",
   "license": "Proprietary",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/infrasutra/infra-cli/releases/download/v0.3.3/infra_0.3.3_windows_amd64.zip",
-      "hash": "f265baef3a32d9cf34b07faca48e56a8ab6c24777f60fec484261357dd5288dc"
+      "url": "https://github.com/infrasutra/infra-cli/releases/download/v0.3.4/infra_0.3.4_windows_amd64.zip",
+      "hash": "473e9fe3aa4b9fa362cf5ba26bc3ca2ee232fe0f4386cf7f24c4e1d7383c2707"
     }
   },
   "bin": "infra.exe",

@@ -1,6 +1,6 @@
 pkgbase = infra-bin
 	pkgdesc = Command-line client for Infrasutra
-	pkgver = 0.3.3
+	pkgver = 0.3.4
 	pkgrel = 1
 	url = https://infrasutra.com
 	arch = x86_64
@@ -9,9 +9,9 @@ pkgbase = infra-bin
 	provides = infra
 	conflicts = infra
 	options = !strip
-	source_x86_64 = infra-0.3.3-x86_64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.3.3/infra_0.3.3_linux_amd64.tar.gz
-	sha256sums_x86_64 = 115571d943d7aad4a87953984e7d39137ea844abfee7cbe371a3904bd45498f8
-	source_aarch64 = infra-0.3.3-aarch64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.3.3/infra_0.3.3_linux_arm64.tar.gz
-	sha256sums_aarch64 = 35c46d9f1f3994c4042b6a8dd5ad6a4704f11f67617838a262a05c63b00bf57f
+	source_x86_64 = infra-0.3.4-x86_64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.3.4/infra_0.3.4_linux_amd64.tar.gz
+	sha256sums_x86_64 = c1c1531dac2ed75857f47a273363cfda5f53934b625ae60fd934bcad2a3f2209
+	source_aarch64 = infra-0.3.4-aarch64.tar.gz::https://github.com/infrasutra/infra-cli/releases/download/v0.3.4/infra_0.3.4_linux_arm64.tar.gz
+	sha256sums_aarch64 = 0ba9fb2a2d6d81374623178e2f93a85c94d6d5ad02d8b5b6822d1742f3a70d24
 
 pkgname = infra-bin
